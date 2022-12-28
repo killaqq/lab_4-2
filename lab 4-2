@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void max_min(int** A, int n_a, int* max_a, int* min_a);
+
+int main()
+{
+    srand(time(NULL));
+    
+    int n;
+    
+    printf("Input n: ");
+    scanf("%d", &n);
+    
+    int** A = (int**)calloc(sizeof(int*), n);
+    for (int i = 0; i < n; i++)
+    {
+        A[i] = (int*)calloc(sizeof(int), n);
+        for (int j = 0; j < n; j++)
+        {
+            A[i][j] = rand() % 90 + 10;
+            printf("%d  ", A[i][j]);
+        }
+        printf("\n");
+    }
+    
+    int max_a, min_a;
+    max_min(A, n, &max_a, &min_a);
+    
+    printf("max = %d\nmin = %d\n", max_a, min_a);
+    
+    for (int i = 0; i < n; i++)
+        free(A[i]);
+    free(A);
+    
+    return 0;
+}
+
+void max_min(int** A, int n_a, int* max_a, int* min_a)
+{
+    *max_a = *min_a = A[0][1];
+    for (int i = 0; i < n_a; i++)
+    {
+        for (int j = i + 1; j < n_a; j++)
+        {
+            if (A[i][j] > *max_a)
+                *max_a = A[i][j];
+            if (A[i][j] < *min_a)
+                *min_a = A[i][j];
+        }
+    }
+}
